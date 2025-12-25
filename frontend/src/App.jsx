@@ -7,11 +7,13 @@ export default function App() {
   const [categories, setCategories] = useState([]);
   const [activeCategoryId, setActiveCategoryId] = useState(null);
 
+  // Load categories from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("categories");
     if (saved) setCategories(JSON.parse(saved));
   }, []);
 
+  // Save categories to localStorage
   useEffect(() => {
     localStorage.setItem("categories", JSON.stringify(categories));
   }, [categories]);
@@ -59,7 +61,9 @@ export default function App() {
   );
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="h-screen w-screen flex bg-neutral-900 text-gray-100">
+
+      {/* Sidebar */}
       <Sidebar
         open={sidebarOpen}
         categories={categories}
@@ -67,43 +71,53 @@ export default function App() {
         setActiveCategory={setActiveCategoryId}
       />
 
+      {/* Main Area */}
       <div className="flex-1 flex flex-col">
-        <div className="bg-white shadow px-4 py-3 flex items-center">
+
+        {/* Top Bar */}
+        <div className="h-14 flex items-center px-4 border-b border-neutral-800">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="text-2xl mr-4"
+            className="mr-3 text-xl hover:bg-neutral-800 p-2 rounded"
           >
             ☰
           </button>
-          <h1 className="text-xl font-semibold">Workout App</h1>
+          <h1 className="text-lg font-semibold">Workout App</h1>
         </div>
 
-        <div className="p-6">
-          {!activeCategory ? (
-            <p className="text-gray-600">
-              Select or create a category
-            </p>
-          ) : (
-            <>
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold">
-                  {activeCategory.name}
-                </h2>
-                <button
-                  onClick={addExercise}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-                >
-                  ➕ Add Exercise
-                </button>
-              </div>
+        {/* Scrollable Content */}
+        <div className="flex-1 overflow-y-auto">
+          <div className="max-w-4xl mx-auto px-6 py-8">
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {activeCategory.exercises.map(ex => (
-                  <ExerciseCard key={ex.id} exercise={ex} />
-                ))}
-              </div>
-            </>
-          )}
+            {!activeCategory ? (
+              <p className="text-neutral-400">
+                Select or create a category
+              </p>
+            ) : (
+              <>
+                <div className="flex justify-between items-center mb-8">
+                  <h2 className="text-2xl font-bold">
+                    {activeCategory.name}
+                  </h2>
+
+                  <button
+                    onClick={addExercise}
+                    className="px-4 py-2 bg-green-600 rounded-lg
+                               hover:bg-green-700 transition"
+                  >
+                    ➕ Add Exercise
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  {activeCategory.exercises.map(ex => (
+                    <ExerciseCard key={ex.id} exercise={ex} />
+                  ))}
+                </div>
+              </>
+            )}
+
+          </div>
         </div>
       </div>
     </div>
