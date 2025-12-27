@@ -61,43 +61,52 @@ export default function ExerciseCard({ exercise, index, onDelete }) {
               e.stopPropagation();
               onDelete();
             }}
-            className="p-1.5 text-zinc-700 hover:text-red-400 opacity-0 group-hover/card:opacity-100 transition-all rounded-md"
-            aria-label="Delete Exercise"
+            className="p-3 text-zinc-700 hover:text-red-400 opacity-100 md:opacity-0 md:group-hover/card:opacity-100 transition-all rounded-md min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2"
+            aria-label={`Delete exercise ${exercise.name}`}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
             </svg>
           </button>
         </div>
 
-        <div
+        <button
           onClick={!isPlaying ? togglePreview : undefined}
-          className={`relative aspect-video bg-zinc-800/20 rounded-lg overflow-hidden border border-zinc-800/40 group/play transition-all ${!isPlaying ? 'cursor-pointer hover:border-zinc-700/60' : ''}`}
+          aria-label={!isPlaying ? `Play preview for ${exercise.name}` : `Stop preview for ${exercise.name}`}
+          className={`w-full relative aspect-video bg-zinc-800/20 rounded-lg overflow-hidden border border-zinc-800/40 group/play transition-all ${!isPlaying ? 'cursor-pointer hover:border-zinc-700/60' : ''}`}
         >
           {isPlaying ? (
             <div ref={playerRef} className="w-full h-full" />
           ) : (
             <div className="w-full h-full flex flex-col items-center justify-center gap-3">
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-zinc-900/80 border border-zinc-800 transition-transform group-hover/play:scale-105">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-600 group-hover/play:text-zinc-400 transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-zinc-600 group-hover/play:text-zinc-400 transition-colors" aria-hidden="true">
                   <polygon points="5 3 19 12 5 21 5 3" />
                 </svg>
               </div>
-              <span className="text-[11px] text-zinc-600 font-medium">Video placeholder</span>
+              <span className="text-[11px] text-zinc-600 font-medium">Video preview</span>
             </div>
           )}
 
           {isPlaying && (
-            <button
-              onClick={(e) => { e.stopPropagation(); togglePreview(); }}
-              className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all opacity-0 group-hover/play:opacity-100"
+            <div
+              className="absolute top-4 right-4"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+              <span
+                onClick={(e) => { e.stopPropagation(); togglePreview(); }}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); togglePreview(); } }}
+                aria-label="Stop preview"
+                className="w-9 h-9 flex items-center justify-center rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/80 transition-all opacity-0 group-hover/play:opacity-100"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </span>
+            </div>
           )}
-        </div>
+        </button>
 
         {metadata && (
           <div className="mt-4 text-[11px] font-medium text-zinc-600">

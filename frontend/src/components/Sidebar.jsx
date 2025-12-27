@@ -24,13 +24,13 @@ export default function Sidebar({
       </div>
 
       {/* Sidebar Content */}
-      <div className="flex-1 overflow-y-auto no-scrollbar">
+      <div className="flex-1 overflow-y-auto no-scrollbar py-2">
         <div className="px-3 mb-6">
           <button
             onClick={addCategory}
-            className="w-full h-11 flex items-center gap-2.5 px-3 rounded-lg border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800 text-sm text-zinc-300 transition-all duration-200 active:scale-[0.98] group"
+            className="w-full h-12 flex items-center gap-2.5 px-3 rounded-xl bg-white text-zinc-950 hover:bg-zinc-200 text-sm font-bold transition-all duration-200 active:scale-[0.96] shadow-lg shadow-white/5"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-400 group-hover:text-zinc-300 transition-colors">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
@@ -40,13 +40,13 @@ export default function Sidebar({
 
         <div className="px-5 mb-2">
           <div className="flex items-center gap-2 pb-2 border-b border-zinc-900/50">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+            <h2 className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
               Categories
-            </span>
+            </h2>
           </div>
         </div>
 
-        <nav className="px-2 space-y-1">
+        <nav aria-label="Workout Categories" className="px-2 space-y-1">
           {categories.map((cat) => (
             <div
               key={cat.id}
@@ -54,6 +54,7 @@ export default function Sidebar({
             >
               <button
                 onClick={() => setActiveCategory(cat.id)}
+                aria-current={activeCategoryId === cat.id ? "page" : undefined}
                 className={`w-full text-left px-3 py-2.5 rounded-lg text-sm transition-all duration-200 flex items-center justify-between ${activeCategoryId === cat.id
                   ? "bg-zinc-800 text-zinc-100 font-medium shadow-sm"
                   : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
@@ -67,10 +68,10 @@ export default function Sidebar({
                   e.stopPropagation();
                   deleteCategory(cat.id);
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-zinc-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all rounded-md"
-                aria-label="Delete Category"
+                className="absolute right-1 top-1/2 -translate-y-1/2 p-3 text-zinc-600 hover:text-red-400 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all rounded-md min-w-[44px] min-h-[44px] flex items-center justify-center -mr-1"
+                aria-label={`Delete category ${cat.name}`}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
                 </svg>
               </button>

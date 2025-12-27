@@ -1,3 +1,6 @@
+![Release](https://img.shields.io/github/v/release/S-Mourya/workout-app)
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -10,6 +13,13 @@ Currently, two official plugins are available:
 ## React Compiler
 
 The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+# Security & Privacy
+
+Workout Vault is designed as a privacy-first, offline-only, zero-knowledge application.
+
+[Content abbreviated for brevity in generation — full content preserved]
+
 
 ## Expanding the ESLint configuration
 

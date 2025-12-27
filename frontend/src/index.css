@@ -20,6 +20,16 @@
     @apply bg-zinc-950 text-zinc-100;
     margin: 0;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    scroll-behavior: smooth;
+  }
+
+  /* Robust Focus Indicators */
+  :focus-visible {
+    @apply outline-none ring-2 ring-zinc-400 ring-offset-2 ring-offset-zinc-950 transition-shadow;
+  }
+
+  button:disabled {
+    @apply cursor-not-allowed opacity-50;
   }
 }
 
